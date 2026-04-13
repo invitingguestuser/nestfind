@@ -1,0 +1,179 @@
+// Version: 1.0.0
+type BlogCategory__541533666 =
+  {#buyingGuide; #marketTrends; #news; #rentalGuide};
+type BlogPostId__279909451 = Nat;
+type BlogPost__72627970 =
+  {
+    authorId : UserId__158757552;
+    category : BlogCategory__541533666;
+    content : Text;
+    createdAt : Timestamp__301639476;
+    excerpt : Text;
+    featuredImageUrl : Text;
+    id : BlogPostId__279909451;
+    isPublished : Bool;
+    metaDescription : Text;
+    publishedAt : ?Timestamp__301639476;
+    slug : Text;
+    tags : [Text];
+    title : Text;
+    updatedAt : Timestamp__301639476
+  };
+type CompareEntry__716092326 =
+  {
+    addedAt : Timestamp__301639476;
+    propertyId : PropertyId__421252593;
+    userId : UserId__158757552
+  };
+type ContentType__880626766 = {#blogPost; #property};
+type FlagId__594976533 = Nat;
+type FlagStatus__798918670 = {#pending; #removed; #reviewed};
+type FlaggedContent__1051962824 =
+  {
+    contentId : Nat;
+    contentType : ContentType__880626766;
+    createdAt : Timestamp__301639476;
+    id : FlagId__594976533;
+    reason : Text;
+    reportedBy : UserId__158757552;
+    status : FlagStatus__798918670
+  };
+type InquiryId__340326671 = Nat;
+type InquiryStatus__486934595 = {#closed; #pending; #responded};
+type InquiryType__249218239 =
+  {#contactAgent; #requestCallback; #scheduleVisit};
+type Inquiry__159127206 =
+  {
+    contactDetails : Text;
+    createdAt : Timestamp__301639476;
+    id : InquiryId__340326671;
+    inquiryType : InquiryType__249218239;
+    message : Text;
+    preferredTime : ?Text;
+    propertyId : PropertyId__421252593;
+    status : InquiryStatus__486934595;
+    userId : UserId__158757552
+  };
+type LocationId__841966024 = Nat;
+type LocationType__685139578 = {#city; #neighborhood};
+type Location__367240909 =
+  {
+    description : Text;
+    featuredImageUrl : Text;
+    id : LocationId__841966024;
+    latitude : Float;
+    locationType : LocationType__685139578;
+    longitude : Float;
+    name : Text;
+    parentId : ?LocationId__841966024;
+    slug : Text
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type PropertyId__421252593 = Nat;
+type PropertyStatus__857618431 = {#approved; #inactive; #pending; #rejected};
+type PropertyType__97042471 =
+  {#apartment; #commercial; #house; #studio; #villa};
+type Property__615325142 =
+  {
+    address : Text;
+    agentId : UserId__158757552;
+    amenities : [Text];
+    bathrooms : Nat;
+    bedrooms : Nat;
+    city : Text;
+    createdAt : Timestamp__301639476;
+    description : Text;
+    id : PropertyId__421252593;
+    isFeatured : Bool;
+    latitude : Float;
+    longitude : Float;
+    neighborhood : Text;
+    photos : [Text];
+    price : Nat;
+    propertyType : PropertyType__97042471;
+    sqft : Nat;
+    status : PropertyStatus__857618431;
+    title : Text;
+    updatedAt : Timestamp__301639476;
+    verificationSource : ?Text;
+    verifiedAt : ?Timestamp__301639476
+  };
+type SavedProperty__219845838 =
+  {
+    propertyId : PropertyId__421252593;
+    savedAt : Timestamp__301639476;
+    userId : UserId__158757552
+  };
+type Timestamp__301639476 = Int;
+type UserId__158757552 = Principal;
+type UserRole__41952412 = {#admin; #agent; #buyer};
+type User__98118558 =
+  {
+    avatarUrl : Text;
+    createdAt : Timestamp__301639476;
+    email : Text;
+    isActive : Bool;
+    isVerified : Bool;
+    name : Text;
+    phone : Text;
+    principalId : UserId__158757552;
+    role : UserRole__41952412
+  };
+actor {
+  stable blogPosts :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?BlogPost__72627970]];
+      var elementIndex : Nat__490723111
+    };
+  stable compareList :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?CompareEntry__716092326]];
+      var elementIndex : Nat__490723111
+    };
+  stable flags :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?FlaggedContent__1051962824]];
+      var elementIndex : Nat__490723111
+    };
+  stable inquiries :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Inquiry__159127206]];
+      var elementIndex : Nat__490723111
+    };
+  stable locations :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Location__367240909]];
+      var elementIndex : Nat__490723111
+    };
+  stable var nextBlogPostId : Nat;
+  stable var nextFlagId : Nat;
+  stable var nextInquiryId : Nat;
+  stable var nextLocationId : Nat;
+  stable var nextPropertyId : Nat;
+  stable properties :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Property__615325142]];
+      var elementIndex : Nat__490723111
+    };
+  stable savedProperties :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?SavedProperty__219845838]];
+      var elementIndex : Nat__490723111
+    };
+  stable seedAgent : Principal;
+  stable seedNow : Nat;
+  stable users :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?User__98118558]];
+      var elementIndex : Nat__490723111
+    }
+};

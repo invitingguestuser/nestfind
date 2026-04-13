@@ -1,0 +1,25 @@
+{
+  "overview": "A modern real estate platform MVP for buyers, renters, and sellers. Find trusted properties, compare options, and contact agents with minimal friction — search, filter, view, save, compare, and book visits all in one place.",
+  "features": [
+    "Property search with filters (location, price, type, beds, baths, amenities)",
+    "Map and list view toggle on search results",
+    "Property detail pages with image gallery, amenities, and sticky contact CTA",
+    "Save, shortlist, compare, and share properties",
+    "Login/signup and user accounts via Internet Identity",
+    "Agent listing submission with photo uploads",
+    "Admin panel: approve listings, manage users, moderate content",
+    "Verification badges with freshness dates on listings",
+    "SEO landing pages for cities, neighborhoods, and property types",
+    "Blog and market guide content pages"
+  ],
+  "category": "real-estate",
+  "tags": [
+    "real-estate",
+    "property-search",
+    "listings",
+    "admin-panel",
+    "seo",
+    "mobile-first"
+  ],
+  "last_updated": "2026-04-13T03:27:54.870Z"
+}

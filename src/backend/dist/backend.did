@@ -1,0 +1,352 @@
+type UserRole = 
+ variant {
+   admin;
+   agent;
+   buyer;
+ };
+type UserId = principal;
+type User = 
+ record {
+   avatarUrl: text;
+   createdAt: Timestamp;
+   email: text;
+   isActive: bool;
+   isVerified: bool;
+   name: text;
+   phone: text;
+   principalId: UserId;
+   role: UserRole;
+ };
+type UpdateUserInput = 
+ record {
+   avatarUrl: opt text;
+   email: opt text;
+   name: opt text;
+   phone: opt text;
+ };
+type UpdatePropertyInput = 
+ record {
+   address: opt text;
+   amenities: opt vec text;
+   bathrooms: opt nat;
+   bedrooms: opt nat;
+   city: opt text;
+   description: opt text;
+   latitude: opt float64;
+   longitude: opt float64;
+   neighborhood: opt text;
+   photos: opt vec text;
+   price: opt nat;
+   propertyType: opt PropertyType;
+   sqft: opt nat;
+   title: opt text;
+ };
+type UpdateLocationInput = 
+ record {
+   description: opt text;
+   featuredImageUrl: opt text;
+   latitude: opt float64;
+   longitude: opt float64;
+   name: opt text;
+   slug: opt text;
+ };
+type UpdateBlogPostInput = 
+ record {
+   category: opt BlogCategory;
+   content: opt text;
+   excerpt: opt text;
+   featuredImageUrl: opt text;
+   isPublished: opt bool;
+   metaDescription: opt text;
+   slug: opt text;
+   tags: opt vec text;
+   title: opt text;
+ };
+type Timestamp = int;
+type SearchFilters = 
+ record {
+   amenities: opt vec text;
+   city: opt text;
+   keyword: opt text;
+   maxBedrooms: opt nat;
+   maxPrice: opt nat;
+   minBathrooms: opt nat;
+   minBedrooms: opt nat;
+   minPrice: opt nat;
+   neighborhood: opt text;
+   page: nat;
+   pageSize: nat;
+   propertyType: opt PropertyType;
+ };
+type RegisterUserInput = 
+ record {
+   avatarUrl: text;
+   email: text;
+   name: text;
+   phone: text;
+   role: UserRole;
+ };
+type PropertyType = 
+ variant {
+   apartment;
+   commercial;
+   house;
+   studio;
+   villa;
+ };
+type PropertyStatus = 
+ variant {
+   approved;
+   inactive;
+   pending;
+   rejected;
+ };
+type PropertyId = nat;
+type Property = 
+ record {
+   address: text;
+   agentId: UserId;
+   amenities: vec text;
+   bathrooms: nat;
+   bedrooms: nat;
+   city: text;
+   createdAt: Timestamp;
+   description: text;
+   id: PropertyId;
+   isFeatured: bool;
+   latitude: float64;
+   longitude: float64;
+   neighborhood: text;
+   photos: vec text;
+   price: nat;
+   propertyType: PropertyType;
+   sqft: nat;
+   status: PropertyStatus;
+   title: text;
+   updatedAt: Timestamp;
+   verificationSource: opt text;
+   verifiedAt: opt Timestamp;
+ };
+type Page = 
+ record {
+   items: vec Property;
+   page: nat;
+   pageSize: nat;
+   total: nat;
+ };
+type LocationType = 
+ variant {
+   city;
+   neighborhood;
+ };
+type LocationId = nat;
+type Location = 
+ record {
+   description: text;
+   featuredImageUrl: text;
+   id: LocationId;
+   latitude: float64;
+   locationType: LocationType;
+   longitude: float64;
+   name: text;
+   parentId: opt LocationId;
+   slug: text;
+ };
+type InquiryType = 
+ variant {
+   contactAgent;
+   requestCallback;
+   scheduleVisit;
+ };
+type InquiryStatus = 
+ variant {
+   closed;
+   pending;
+   responded;
+ };
+type InquiryId = nat;
+type Inquiry = 
+ record {
+   contactDetails: text;
+   createdAt: Timestamp;
+   id: InquiryId;
+   inquiryType: InquiryType;
+   message: text;
+   preferredTime: opt text;
+   propertyId: PropertyId;
+   status: InquiryStatus;
+   userId: UserId;
+ };
+type FlaggedContent = 
+ record {
+   contentId: nat;
+   contentType: ContentType;
+   createdAt: Timestamp;
+   id: FlagId;
+   reason: text;
+   reportedBy: UserId;
+   status: FlagStatus;
+ };
+type FlagStatus = 
+ variant {
+   pending;
+   removed;
+   reviewed;
+ };
+type FlagId = nat;
+type FlagAction = 
+ variant {
+   dismiss;
+   remove;
+ };
+type CreatePropertyInput = 
+ record {
+   address: text;
+   amenities: vec text;
+   bathrooms: nat;
+   bedrooms: nat;
+   city: text;
+   description: text;
+   latitude: float64;
+   longitude: float64;
+   neighborhood: text;
+   photos: vec text;
+   price: nat;
+   propertyType: PropertyType;
+   sqft: nat;
+   title: text;
+ };
+type CreateLocationInput = 
+ record {
+   description: text;
+   featuredImageUrl: text;
+   latitude: float64;
+   locationType: LocationType;
+   longitude: float64;
+   name: text;
+   parentId: opt LocationId;
+   slug: text;
+ };
+type CreateInquiryInput = 
+ record {
+   contactDetails: text;
+   inquiryType: InquiryType;
+   message: text;
+   preferredTime: opt text;
+   propertyId: PropertyId;
+ };
+type CreateFlagInput = 
+ record {
+   contentId: nat;
+   contentType: ContentType;
+   reason: text;
+ };
+type CreateBlogPostInput = 
+ record {
+   category: BlogCategory;
+   content: text;
+   excerpt: text;
+   featuredImageUrl: text;
+   isPublished: bool;
+   metaDescription: text;
+   slug: text;
+   tags: vec text;
+   title: text;
+ };
+type ContentType = 
+ variant {
+   blogPost;
+   property;
+ };
+type BlogPostId = nat;
+type BlogPost = 
+ record {
+   authorId: UserId;
+   category: BlogCategory;
+   content: text;
+   createdAt: Timestamp;
+   excerpt: text;
+   featuredImageUrl: text;
+   id: BlogPostId;
+   isPublished: bool;
+   metaDescription: text;
+   publishedAt: opt Timestamp;
+   slug: text;
+   tags: vec text;
+   title: text;
+   updatedAt: Timestamp;
+ };
+type BlogCategory = 
+ variant {
+   buyingGuide;
+   marketTrends;
+   news;
+   rentalGuide;
+ };
+type AdminStats = 
+ record {
+   activeUsers: nat;
+   pendingApprovals: nat;
+   totalBlogPosts: nat;
+   totalInquiries: nat;
+   totalListings: nat;
+ };
+service : {
+  activateUser: (principalId: UserId) -> (bool);
+  addToCompare: (propertyId: PropertyId) -> ();
+  approveProperty: (propertyId: PropertyId, verificationSource: text) ->
+   (opt Property);
+  createBlogPost: (input: CreateBlogPostInput) -> (BlogPost);
+  createInquiry: (input: CreateInquiryInput) -> (Inquiry);
+  createLocation: (input: CreateLocationInput) -> (Location);
+  createProperty: (input: CreatePropertyInput) -> (Property);
+  deactivateUser: (principalId: UserId) -> (bool);
+  deleteBlogPost: (postId: BlogPostId) -> (bool);
+  deleteProperty: (propertyId: PropertyId) -> (bool);
+  flagContent: (input: CreateFlagInput) -> (FlaggedContent);
+  getAdminStats: () -> (AdminStats);
+  getAgentListings: (agentId: UserId) -> (vec Property) query;
+  getBlogPost: (postId: BlogPostId) -> (opt BlogPost) query;
+  getBlogPostBySlug: (slug: text) -> (opt BlogPost) query;
+  getCompareList: () -> (vec Property) query;
+  getFeaturedProperties: () -> (vec Property) query;
+  getInquiry: (inquiryId: InquiryId) -> (opt Inquiry) query;
+  getLocation: (locationId: LocationId) -> (opt Location) query;
+  getLocationBySlug: (slug: text) -> (opt Location) query;
+  getPropertiesByCity: (city: text) -> (vec Property) query;
+  getPropertiesByNeighborhood: (neighborhood: text) -> (vec Property) query;
+  getPropertiesByType: (propertyType: PropertyType) -> (vec Property) query;
+  getProperty: (propertyId: PropertyId) -> (opt Property) query;
+  getSavedProperties: () -> (vec Property) query;
+  getSimilarProperties: (propertyId: PropertyId) -> (vec Property) query;
+  getUser: (principalId: UserId) -> (opt User) query;
+  getUserByPrincipal: () -> (opt User) query;
+  listAllInquiries: () -> (vec Inquiry);
+  listAllUsers: () -> (vec User);
+  listBlogPosts: (category: opt BlogCategory, isPublished: opt bool) ->
+   (vec BlogPost) query;
+  listFlaggedContent: () -> (vec FlaggedContent);
+  listInquiryByProperty: (propertyId: PropertyId) -> (vec Inquiry) query;
+  listInquiryByUser: () -> (vec Inquiry) query;
+  listLocations: () -> (vec Location) query;
+  listNeighborhoodsByCity: (cityId: LocationId) -> (vec Location) query;
+  listProperties: (page: nat, pageSize: nat) -> (Page) query;
+  registerUser: (input: RegisterUserInput) -> (User);
+  rejectProperty: (propertyId: PropertyId, reason: text) -> (opt Property);
+  removeFromCompare: (propertyId: PropertyId) -> ();
+  reviewFlaggedContent: (flagId: FlagId, action: FlagAction) ->
+   (opt FlaggedContent);
+  saveProperty: (propertyId: PropertyId) -> ();
+  searchProperties: (filters: SearchFilters) -> (Page) query;
+  setUserRole: (principalId: UserId, role: UserRole) -> (opt User);
+  unsaveProperty: (propertyId: PropertyId) -> ();
+  updateBlogPost: (postId: BlogPostId, input: UpdateBlogPostInput) ->
+   (opt BlogPost);
+  updateInquiryStatus: (inquiryId: InquiryId, status: InquiryStatus) ->
+   (opt Inquiry);
+  updateLocation: (locationId: LocationId, input: UpdateLocationInput) ->
+   (opt Location);
+  updateProperty: (propertyId: PropertyId, input: UpdatePropertyInput) ->
+   (opt Property);
+  updateUser: (input: UpdateUserInput) -> (opt User);
+}
